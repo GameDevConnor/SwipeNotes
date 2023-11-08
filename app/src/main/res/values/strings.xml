@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Swipe Notes</string>
+    <string name="savetext">SAVE</string>
 </resources>
