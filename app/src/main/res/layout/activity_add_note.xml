@@ -41,17 +41,18 @@
                 android:backgroundTint="#00BCD4"
                 android:text="@string/savetext" />
         </TableRow>
+
         <EditText
+            android:id="@+id/notebody"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/notebody"
-            android:hint="Note body..."
-            android:textColor="@color/white"
-            android:padding="10dp"
             android:layout_margin="10dp"
             android:background="#309C27B0"
+            android:gravity="top"
+            android:hint="Note body..."
             android:lines="10"
-            android:gravity="top"/>
+            android:padding="10dp"
+            android:textColor="@color/white" />
 
 
     </GridLayout>
