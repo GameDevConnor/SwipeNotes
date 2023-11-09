@@ -2,16 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/note_background"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
     android:layout_marginBottom="10dp"
-    android:background="@color/white">
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titleofnote"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/black"
         tools:text="My Title"/>
     <TextView
@@ -28,7 +29,7 @@
         android:layout_below="@id/descriptionofnote"
         android:textColor="@color/black"
         tools:text="My Time"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:gravity="end"
         />
 
