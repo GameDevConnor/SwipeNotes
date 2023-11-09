@@ -81,7 +81,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 bundle.putString("body", note.description);
                 bundle.putString("timeCreated", note.timeCreated);
 
-                context.startActivity(new Intent(context, AddNoteActivity.class).putExtras(bundle));
+
+                /* Updated code */
+                ///////////////////////////////////////////////////////////////////
+                Intent intent = new Intent(context, AddNoteActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+                ////////////////////////////////////////////////////////////////
+
+                // removed --- context.startActivity(new Intent(context, AddNoteActivity.class).putExtras(bundle));
+
             }
         });
 
