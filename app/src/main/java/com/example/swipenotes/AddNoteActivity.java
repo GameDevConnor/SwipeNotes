@@ -34,7 +34,6 @@ public class AddNoteActivity extends AppCompatActivity {
         body = findViewById(R.id.notebody);
 
 
-
         Realm.init(getApplicationContext());
         Realm realm = Realm.getDefaultInstance();
 
@@ -54,7 +53,6 @@ public class AddNoteActivity extends AppCompatActivity {
 //                String createdTime = DateFormat.getDateTimeInstance().format(System.currentTimeMillis());
 
 
-
                 realm.beginTransaction();
 
                 Note note;
@@ -65,8 +63,7 @@ public class AddNoteActivity extends AppCompatActivity {
 //                    note.setTimeCreated(createdTime);
                     note = new Note();
 
-                }
-                else {
+                } else {
                     note = realm.where(Note.class).equalTo("timeCreated", bundle.getString("timeCreated")).findFirst();
                 }
 
@@ -87,5 +84,45 @@ public class AddNoteActivity extends AppCompatActivity {
         });
     }
 
+    // This method is called when the user clicks the back button.
+    // it saves the note if it is new or updates the note if notes was already saved
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+        String titleText = title.getText().toString();
+        String notebody = body.getText().toString();
+
+
+        if (titleText.isEmpty() || notebody.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Note not saved. Title or Note content is empty", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        else {
+            Realm.init(getApplicationContext());
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+
+            Note note;
+
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                note = new Note();
+            } else {
+                note = realm.where(Note.class).equalTo("timeCreated", bundle.getString("timeCreated")).findFirst();
+            }
+
+            note.setDescription(notebody);
+            note.setTitle(titleText);
+
+            realm.copyToRealmOrUpdate(note);
+
+            realm.commitTransaction();
+
+            Toast.makeText(getApplicationContext(), "Note Saved", Toast.LENGTH_SHORT).show();
+
+            finish();
+        }
+    }
 }
