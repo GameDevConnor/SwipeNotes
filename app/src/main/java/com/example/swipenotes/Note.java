@@ -2,35 +2,27 @@ package com.example.swipenotes;
 
 
 
+import java.text.DateFormat;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Note extends RealmObject {
 
-//    public int getNoteId() {
-//        return noteId;
-//    }
-//
-//    public void setNoteId(int noteId) {
-//        this.noteId = noteId;
-//    }
-//
-//    public String getContent() {
-//        return content;
-//    }
-//
-//    public void setContent(String content) {
-//        this.content = content;
-//    }
 
-//    @PrimaryKey(autoGenerate = true)
-//            private int noteId;
-//
-//    @ColumnInfo(name="note_body")
-//            private String content;
 
     String title;
-    long timeCreated;
+
+//    long timeCreated;
+    @PrimaryKey
+    String timeCreated;
+
     String description;
+
+    public Note() {
+        this.timeCreated = DateFormat.getDateTimeInstance().format(System.currentTimeMillis());
+
+    }
 
     public String getTitle() {
         return title;
@@ -40,14 +32,22 @@ public class Note extends RealmObject {
         this.title = title;
     }
 
-    public long getTimeCreated() {
+
+//    public long getTimeCreated() {
+//        return timeCreated;
+//    }
+//
+//    public void setTimeCreated(long timeCreated) {
+//        this.timeCreated = timeCreated;
+//    }
+
+    public String getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(long timeCreated) {
+    public void setTimeCreated(String timeCreated) {
         this.timeCreated = timeCreated;
     }
-
     public String getDescription() {
         return description;
     }

@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import java.text.DateFormat;
 
 import io.realm.Realm;
 
@@ -35,21 +38,44 @@ public class AddNoteActivity extends AppCompatActivity {
         Realm.init(getApplicationContext());
         Realm realm = Realm.getDefaultInstance();
 
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            title.setText(bundle.getString("title"));
+            body.setText(bundle.getString("body"));
+        }
+
         saveNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String titleText = title.getText().toString();
                 String notebody = body.getText().toString();
-                long createdTime = System.currentTimeMillis();
+//                long createdTime = System.currentTimeMillis();
+//                String createdTime = DateFormat.getDateTimeInstance().format(System.currentTimeMillis());
+
 
 
                 realm.beginTransaction();
 
-                Note note = realm.createObject(Note.class);
+                Note note;
+
+
+                if (bundle == null) {
+//                    note = realm.createObject(Note.class, note.getTimeCreated());
+//                    note.setTimeCreated(createdTime);
+                    note = new Note();
+
+                }
+                else {
+                    note = realm.where(Note.class).equalTo("timeCreated", bundle.getString("timeCreated")).findFirst();
+                }
+
 
                 note.setDescription(notebody);
                 note.setTitle(titleText);
-                note.setTimeCreated(createdTime);
+
+
+                realm.copyToRealmOrUpdate(note);
 
                 realm.commitTransaction();
 

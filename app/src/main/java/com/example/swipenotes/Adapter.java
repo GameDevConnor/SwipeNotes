@@ -1,6 +1,8 @@
 package com.example.swipenotes;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -40,8 +42,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
 
-        String formattedTime = DateFormat.getDateTimeInstance().format(note.timeCreated);
-        holder.time.setText(formattedTime);
+//        String formattedTime = DateFormat.getDateTimeInstance().format(note.timeCreated);
+        holder.time.setText(note.getTimeCreated());
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -70,6 +72,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("title", note.title);
+                bundle.putString("body", note.description);
+                bundle.putString("timeCreated", note.timeCreated);
+
+                context.startActivity(new Intent(context, AddNoteActivity.class).putExtras(bundle));
+            }
+        });
+
     }
 
     @Override
@@ -91,4 +106,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         }
     }
+
 }

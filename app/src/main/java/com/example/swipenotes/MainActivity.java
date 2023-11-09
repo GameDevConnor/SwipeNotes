@@ -69,5 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void goToEdit() {
+        startActivity(new Intent(MainActivity.this, AddNoteActivity.class));
+    }
+
 }
 
