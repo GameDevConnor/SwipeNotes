@@ -76,7 +76,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
                 realm.commitTransaction();
 
-                Toast.makeText(getApplicationContext(), "Note Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Note " + '"'+ titleText +'"' + " Saved", Toast.LENGTH_SHORT).show();
 
                 finish();
 
@@ -120,7 +120,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
             realm.commitTransaction();
 
-            Toast.makeText(getApplicationContext(), "Note Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Note " + '"'+ titleText +'"' + " Saved", Toast.LENGTH_SHORT).show();
 
             finish();
         }
