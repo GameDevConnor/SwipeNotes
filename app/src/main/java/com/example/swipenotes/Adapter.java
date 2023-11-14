@@ -40,7 +40,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         Note note = noteList.get(position);
 
         holder.title.setText(note.getTitle());
-        holder.description.setText(note.getDescription());
+
+        //display only first 3 lines of the note
+        String[] lines = note.getDescription().split("\n");
+        String description = "";
+        for (int i = 0; i < lines.length; i++) {
+            if (i == 3) {
+                break;
+            }
+            description += lines[i] + "\n";
+        }
+        holder.description.setText(description);
 
 //        String formattedTime = DateFormat.getDateTimeInstance().format(note.timeCreated);
         holder.time.setText(note.getTimeCreated());
