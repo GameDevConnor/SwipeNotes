@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -17,7 +18,7 @@ import io.realm.Realm;
 
 public class AddNoteActivity extends AppCompatActivity {
 
-    Button saveNote;
+    ImageButton saveNote;
     EditText title;
     EditText body;
     private Note note;
@@ -94,7 +95,7 @@ public class AddNoteActivity extends AppCompatActivity {
         String notebody = body.getText().toString();
 
 
-        if (titleText.isEmpty() || notebody.isEmpty()) {
+        if (titleText.length() == 0 || notebody.length() == 0) {
             Toast.makeText(getApplicationContext(), "Note not saved. Title or Note content is empty", Toast.LENGTH_SHORT).show();
             finish();
         }
