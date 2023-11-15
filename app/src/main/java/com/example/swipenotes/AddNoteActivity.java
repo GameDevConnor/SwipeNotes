@@ -159,13 +159,14 @@ public class AddNoteActivity extends AppCompatActivity {
         StyleSpan[] styleSpans = editable.getSpans(selectionStart, selectionEnd, StyleSpan.class);
 
         if (styleSpans.length > 0) {
+            int notBoldCount = 0;
+            int boldCount = 0;
             // Remove all bold spans in the selected range
             for (StyleSpan span : styleSpans) {
                 int spanStart = editable.getSpanStart(span);
                 int spanEnd = editable.getSpanEnd(span);
 
-                int notBoldCount = 0;
-                int boldCount = 0;
+
 
                 if ((spanStart < selectionEnd && spanEnd > selectionStart)) {
 
@@ -178,10 +179,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     }
 
 
-                    if (boldCount == 0 && notBoldCount > 0) {
-                        editable.setSpan(bold, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        edit.setText(editable);
-                    }
+
 
                     // Add a new span for the unbolded part before the selection
                     if (spanStart < selectionStart) {
@@ -193,6 +191,11 @@ public class AddNoteActivity extends AppCompatActivity {
                         editable.setSpan(bold, selectionEnd, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
                 }
+            }
+
+            if (boldCount == 0 && notBoldCount > 0) {
+                editable.setSpan(bold, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                edit.setText(editable);
             }
 
             edit.setText(editable);
