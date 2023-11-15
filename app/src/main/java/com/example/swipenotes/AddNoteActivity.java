@@ -25,7 +25,7 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageButton saveNote;
     EditText title;
 
-    Button boldButton;
+    Button boldButton, italicButton;
     EditText body;
     private Note note;
 
@@ -38,6 +38,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
 
         boldButton = findViewById(R.id.boldButton);
+        italicButton = findViewById(R.id.italicButton);
         saveNote = findViewById(R.id.savenote);
         title = findViewById(R.id.titleinput);
         body = findViewById(R.id.notebody);
@@ -46,6 +47,13 @@ public class AddNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setBold(body);
+            }
+        });
+
+        italicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setItalic(body);
             }
         });
 
@@ -175,6 +183,46 @@ public class AddNoteActivity extends AppCompatActivity {
         } else {
             // If no bold spans found, add a new bold span to the entire selected range
             editable.setSpan(bold, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            edit.setText(editable);
+        }
+
+        edit.setSelection(selectionEnd);
+    }
+
+    public void setItalic(EditText edit) {
+        StyleSpan italic = new StyleSpan(Typeface.ITALIC);
+
+        Editable editable = edit.getText();
+        int selectionStart = edit.getSelectionStart();
+        int selectionEnd = edit.getSelectionEnd();
+
+        StyleSpan[] styleSpans = editable.getSpans(selectionStart, selectionEnd, StyleSpan.class);
+
+        if (styleSpans.length > 0) {
+            // Remove all italic spans in the selected range
+            for (StyleSpan span : styleSpans) {
+                int spanStart = editable.getSpanStart(span);
+                int spanEnd = editable.getSpanEnd(span);
+
+                if (spanStart < selectionEnd && spanEnd > selectionStart) {
+                    editable.removeSpan(span);
+
+                    // Add a new span for the unitaliced part before the selection
+                    if (spanStart < selectionStart) {
+                        editable.setSpan(italic, spanStart, selectionStart, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+
+                    // Add a new span for the unitaliced part after the selection
+                    if (spanEnd > selectionEnd) {
+                        editable.setSpan(italic, selectionEnd, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+
+            edit.setText(editable);
+        } else {
+            // If no italic spans found, add a new italic span to the entire selected range
+            editable.setSpan(italic, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             edit.setText(editable);
         }
 
