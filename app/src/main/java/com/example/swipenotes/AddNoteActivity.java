@@ -3,7 +3,11 @@ package com.example.swipenotes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +24,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
     ImageButton saveNote;
     EditText title;
+
+    Button boldButton;
     EditText body;
     private Note note;
 
@@ -30,10 +36,18 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
+
+        boldButton = findViewById(R.id.boldButton);
         saveNote = findViewById(R.id.savenote);
         title = findViewById(R.id.titleinput);
         body = findViewById(R.id.notebody);
 
+        boldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBold(body);
+            }
+        });
 
         Realm.init(getApplicationContext());
         Realm realm = Realm.getDefaultInstance();
@@ -125,5 +139,45 @@ public class AddNoteActivity extends AppCompatActivity {
 
             finish();
         }
+    }
+
+    public void setBold(EditText edit) {
+        StyleSpan bold = new StyleSpan(Typeface.BOLD);
+
+        Editable editable = edit.getText();
+        int selectionStart = edit.getSelectionStart();
+        int selectionEnd = edit.getSelectionEnd();
+
+        StyleSpan[] styleSpans = editable.getSpans(selectionStart, selectionEnd, StyleSpan.class);
+
+        if (styleSpans.length > 0) {
+            // Remove all bold spans in the selected range
+            for (StyleSpan span : styleSpans) {
+                int spanStart = editable.getSpanStart(span);
+                int spanEnd = editable.getSpanEnd(span);
+
+                if (spanStart < selectionEnd && spanEnd > selectionStart) {
+                    editable.removeSpan(span);
+
+                    // Add a new span for the unbolded part before the selection
+                    if (spanStart < selectionStart) {
+                        editable.setSpan(bold, spanStart, selectionStart, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+
+                    // Add a new span for the unbolded part after the selection
+                    if (spanEnd > selectionEnd) {
+                        editable.setSpan(bold, selectionEnd, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+
+            edit.setText(editable);
+        } else {
+            // If no bold spans found, add a new bold span to the entire selected range
+            editable.setSpan(bold, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            edit.setText(editable);
+        }
+
+        edit.setSelection(selectionEnd);
     }
 }
