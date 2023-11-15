@@ -164,8 +164,24 @@ public class AddNoteActivity extends AppCompatActivity {
                 int spanStart = editable.getSpanStart(span);
                 int spanEnd = editable.getSpanEnd(span);
 
-                if (spanStart < selectionEnd && spanEnd > selectionStart) {
-                    editable.removeSpan(span);
+                int notBoldCount = 0;
+                int boldCount = 0;
+
+                if ((spanStart < selectionEnd && spanEnd > selectionStart)) {
+
+                    if (span.getStyle() == Typeface.BOLD) {
+                        editable.removeSpan(span);
+                        boldCount++;
+                    }
+                    else {
+                        notBoldCount++;
+                    }
+
+
+                    if (boldCount == 0 && notBoldCount > 0) {
+                        editable.setSpan(bold, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        edit.setText(editable);
+                    }
 
                     // Add a new span for the unbolded part before the selection
                     if (spanStart < selectionStart) {
@@ -200,12 +216,29 @@ public class AddNoteActivity extends AppCompatActivity {
 
         if (styleSpans.length > 0) {
             // Remove all italic spans in the selected range
+
+            int notItalicCount = 0;
+            int italicCount = 0;
+
             for (StyleSpan span : styleSpans) {
                 int spanStart = editable.getSpanStart(span);
                 int spanEnd = editable.getSpanEnd(span);
 
-                if (spanStart < selectionEnd && spanEnd > selectionStart) {
-                    editable.removeSpan(span);
+
+
+                if ((spanStart < selectionEnd && spanEnd > selectionStart)) {
+
+                    if (span.getStyle() == Typeface.ITALIC) {
+                        editable.removeSpan(span);
+                        italicCount++;
+                    }
+                    else {
+                        notItalicCount++;
+                    }
+
+
+
+
 
                     // Add a new span for the unitaliced part before the selection
                     if (spanStart < selectionStart) {
@@ -217,6 +250,11 @@ public class AddNoteActivity extends AppCompatActivity {
                         editable.setSpan(italic, selectionEnd, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
                 }
+            }
+
+            if (italicCount == 0 && notItalicCount > 0) {
+                editable.setSpan(italic, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                edit.setText(editable);
             }
 
             edit.setText(editable);
