@@ -62,6 +62,20 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
 
+        boldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setItalic(body);
+            }
+        });
+
+        italicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setItalic(body);
+            }
+        });
+
         Realm.init(getApplicationContext());
         Realm realm = Realm.getDefaultInstance();
 
