@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 
 import java.text.DateFormat;
@@ -26,6 +28,7 @@ public class AddNoteActivity extends AppCompatActivity {
     EditText title;
 
     Button boldButton, italicButton;
+    FloatingActionButton boldFab, italicFab;
     EditText body;
     private Note note;
 
@@ -37,20 +40,22 @@ public class AddNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
 
 
+        boldFab = findViewById(R.id.boldFab);
+        italicFab = findViewById(R.id.italicFab);
         boldButton = findViewById(R.id.boldButton);
         italicButton = findViewById(R.id.italicButton);
         saveNote = findViewById(R.id.savenote);
         title = findViewById(R.id.titleinput);
         body = findViewById(R.id.notebody);
 
-        boldButton.setOnClickListener(new View.OnClickListener() {
+        boldFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setBold(body);
             }
         });
 
-        italicButton.setOnClickListener(new View.OnClickListener() {
+        italicFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setItalic(body);
