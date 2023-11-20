@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/notetitle"
-        android:text="NOTES"
+        android:text="SwipeNotes"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold"/>
