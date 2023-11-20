@@ -75,7 +75,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_bold" />
+        android:src="@drawable/bold" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/italicFab"
@@ -84,6 +84,6 @@
         android:layout_above="@id/boldFab"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_italic" />
+        android:src="@drawable/italic" />
 
 </RelativeLayout>
