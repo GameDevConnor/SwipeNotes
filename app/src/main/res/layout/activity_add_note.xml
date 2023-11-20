@@ -28,21 +28,9 @@
                 android:src="@android:drawable/ic_menu_save"
                 android:text="Back" />
 
-            <Button
-                android:id="@+id/boldButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="bold" />
-
-            <Button
-                android:id="@+id/italicButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ita" />
-
             <EditText
                 android:id="@+id/titleinput"
-                android:layout_width="260dp"
+                android:layout_width="294dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_margin="10dp"

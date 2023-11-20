@@ -27,7 +27,6 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageButton saveNote;
     EditText title;
 
-    Button boldButton, italicButton;
     FloatingActionButton boldFab, italicFab;
     EditText body;
     private Note note;
@@ -42,8 +41,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
         boldFab = findViewById(R.id.boldFab);
         italicFab = findViewById(R.id.italicFab);
-        boldButton = findViewById(R.id.boldButton);
-        italicButton = findViewById(R.id.italicButton);
         saveNote = findViewById(R.id.savenote);
         title = findViewById(R.id.titleinput);
         body = findViewById(R.id.notebody);
@@ -56,20 +53,6 @@ public class AddNoteActivity extends AppCompatActivity {
         });
 
         italicFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setItalic(body);
-            }
-        });
-
-        boldButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setItalic(body);
-            }
-        });
-
-        italicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setItalic(body);
