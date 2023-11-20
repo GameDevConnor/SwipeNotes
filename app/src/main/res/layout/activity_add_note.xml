@@ -28,6 +28,13 @@
                 android:src="@android:drawable/ic_menu_save"
                 android:text="Back" />
 
+            <Button
+                android:id="@+id/swipeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Swipe Meeeeeeeeeeeeeeee" />
+
             <EditText
                 android:id="@+id/titleinput"
                 android:layout_width="294dp"
