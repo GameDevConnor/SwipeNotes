@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Swipe Notes</string>
+    <string name="gesture_button_text">Left=bold Right=italic</string>
 </resources>
