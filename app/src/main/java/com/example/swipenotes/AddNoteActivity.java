@@ -90,14 +90,17 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
-
+        //define our buttons
         boldFab = findViewById(R.id.boldFab);
         italicFab = findViewById(R.id.italicFab);
         menuFab = findViewById(R.id.menuFab);
         saveNote = findViewById(R.id.savenote);
+
+        //define our text boxes for title and body
         title = findViewById(R.id.titleinput);
         body = findViewById(R.id.notebody);
 
+        //define our animations
         openAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
         closeAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
         fromBottomAnim = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
@@ -106,6 +109,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
         menuFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                //call the methods for visibility, animation, and setting clickable for the bold and italic buttons
+
                 setVisibility(menuClicked);
                 setAnimation(menuClicked);
                 setClickable(menuClicked);
@@ -132,6 +137,7 @@ public class AddNoteActivity extends AppCompatActivity {
         Realm realm = Realm.getDefaultInstance();
 
 
+        //reload saved note from database
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             title.setText(bundle.getString("title"));
@@ -165,7 +171,6 @@ public class AddNoteActivity extends AppCompatActivity {
                 note.setDescription(notebody);
                 note.setTitle(titleText);
 
-
                 realm.copyToRealmOrUpdate(note);
 
                 realm.commitTransaction();
@@ -195,15 +200,18 @@ public class AddNoteActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+        //convert to string in order to save
         String titleText = title.getText().toString();
         String notebody = body.getText().toString();
 
 
+        //if new note is empty
         if (titleText.length() == 0 || notebody.length() == 0) {
             Toast.makeText(getApplicationContext(), "Note not saved. Title or Note content is empty", Toast.LENGTH_SHORT).show();
             finish();
         }
 
+        //save note via bundle
         else {
             Realm.init(getApplicationContext());
             Realm realm = Realm.getDefaultInstance();
@@ -231,6 +239,7 @@ public class AddNoteActivity extends AppCompatActivity {
         }
     }
 
+    //method for setting bold
     public void setBold(EditText edit) {
         StyleSpan bold = new StyleSpan(Typeface.BOLD);
 
@@ -248,8 +257,6 @@ public class AddNoteActivity extends AppCompatActivity {
                 int spanStart = editable.getSpanStart(span);
                 int spanEnd = editable.getSpanEnd(span);
 
-
-
                 if ((spanStart < selectionEnd && spanEnd > selectionStart)) {
 
                     if (span.getStyle() == Typeface.BOLD) {
@@ -259,9 +266,6 @@ public class AddNoteActivity extends AppCompatActivity {
                     else {
                         notBoldCount++;
                     }
-
-
-
 
                     // Add a new span for the unbolded part before the selection
                     if (spanStart < selectionStart) {
@@ -309,8 +313,6 @@ public class AddNoteActivity extends AppCompatActivity {
                 int spanStart = editable.getSpanStart(span);
                 int spanEnd = editable.getSpanEnd(span);
 
-
-
                 if ((spanStart < selectionEnd && spanEnd > selectionStart)) {
 
                     if (span.getStyle() == Typeface.ITALIC) {
@@ -320,10 +322,6 @@ public class AddNoteActivity extends AppCompatActivity {
                     else {
                         notItalicCount++;
                     }
-
-
-
-
 
                     // Add a new span for the unitaliced part before the selection
                     if (spanStart < selectionStart) {
