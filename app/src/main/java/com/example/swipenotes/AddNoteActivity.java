@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,7 +33,7 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageButton saveNote;
     EditText title;
 
-    FloatingActionButton boldFab, italicFab;
+    FloatingActionButton menuFab, boldFab, italicFab;
     EditText body;
     private Note note;
 
@@ -39,6 +42,14 @@ public class AddNoteActivity extends AppCompatActivity {
     private GestureDetector gestureDetector;
     private Button swipeButton;
     private EditText editText;
+
+    //animations
+    private Animation openAnim;
+    private Animation closeAnim;
+    private Animation toBottomAnim;
+    private Animation fromBottomAnim;
+
+    private boolean menuClicked;
 
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -82,9 +93,26 @@ public class AddNoteActivity extends AppCompatActivity {
 
         boldFab = findViewById(R.id.boldFab);
         italicFab = findViewById(R.id.italicFab);
+        menuFab = findViewById(R.id.menuFab);
         saveNote = findViewById(R.id.savenote);
         title = findViewById(R.id.titleinput);
         body = findViewById(R.id.notebody);
+
+        openAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
+        closeAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
+        fromBottomAnim = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
+        toBottomAnim = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
+        menuClicked = false;
+
+        menuFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                setVisibility(menuClicked);
+                setAnimation(menuClicked);
+                setClickable(menuClicked);
+
+                menuClicked = !menuClicked;
+            }
+        });
 
         boldFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -322,5 +350,46 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
         edit.setSelection(selectionEnd);
+    }
+
+    //set visibility of buttons
+    private void setVisibility(boolean clicked) {
+        if(!clicked) {
+            boldFab.setVisibility(View.VISIBLE);
+            italicFab.setVisibility(View.VISIBLE);
+        }
+
+        else {
+            boldFab.setVisibility(View.INVISIBLE);
+            italicFab.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    //start animations
+    private void setAnimation(boolean clicked) {
+        if(!clicked) {
+            boldFab.startAnimation(fromBottomAnim);
+            italicFab.startAnimation(fromBottomAnim);
+            menuFab.startAnimation(openAnim);
+        }
+
+        else {
+            boldFab.startAnimation(toBottomAnim);
+            italicFab.startAnimation(toBottomAnim);
+            menuFab.startAnimation(closeAnim);
+        }
+    }
+
+    //method to make sure the buttons can't be clicked when menu hasn't been opened
+    private void setClickable(boolean clicked) {
+        if(!clicked) {
+            boldFab.setClickable(true);
+            italicFab.setClickable(true);
+        }
+
+        else {
+            boldFab.setClickable(false);
+            italicFab.setClickable(false);
+        }
     }
 }
