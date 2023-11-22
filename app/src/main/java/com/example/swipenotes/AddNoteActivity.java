@@ -147,38 +147,7 @@ public class AddNoteActivity extends AppCompatActivity {
         saveNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String titleText = title.getText().toString();
-                String notebody = body.getText().toString();
-//                long createdTime = System.currentTimeMillis();
-//                String createdTime = DateFormat.getDateTimeInstance().format(System.currentTimeMillis());
-
-
-                realm.beginTransaction();
-
-                Note note;
-
-
-                if (bundle == null) {
-//                    note = realm.createObject(Note.class, note.getTimeCreated());
-//                    note.setTimeCreated(createdTime);
-                    note = new Note();
-
-                } else {
-                    note = realm.where(Note.class).equalTo("timeCreated", bundle.getString("timeCreated")).findFirst();
-                }
-
-
-                note.setDescription(notebody);
-                note.setTitle(titleText);
-
-                realm.copyToRealmOrUpdate(note);
-
-                realm.commitTransaction();
-
-                Toast.makeText(getApplicationContext(), "Note " + '"'+ titleText +'"' + " Saved", Toast.LENGTH_SHORT).show();
-
-                finish();
-
+                onBackPressed();
             }
         });
 
@@ -206,8 +175,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
 
         //if new note is empty
-        if (titleText.length() == 0 || notebody.length() == 0) {
-            Toast.makeText(getApplicationContext(), "Note not saved. Title or Note content is empty", Toast.LENGTH_SHORT).show();
+        if (notebody.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Note not saved. Note content is empty", Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -233,7 +202,13 @@ public class AddNoteActivity extends AppCompatActivity {
 
             realm.commitTransaction();
 
-            Toast.makeText(getApplicationContext(), "Note " + '"'+ titleText +'"' + " Saved", Toast.LENGTH_SHORT).show();
+            if(titleText.length() == 0) {
+                Toast.makeText(getApplicationContext(), "Note with no title saved.", Toast.LENGTH_SHORT).show();
+            }
+
+            else {
+                Toast.makeText(getApplicationContext(), "Note with title " + '"' + titleText + '"' + " Saved", Toast.LENGTH_SHORT).show();
+            }
 
             finish();
         }
