@@ -92,6 +92,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 bundle.putString("timeCreated", note.timeCreated);
 
 
+                ////////////////////////////////////////////////////////////////
+
+                bundle.putString("spans", note.getSpanContainers());
+
+                ////////////////////////////////////////////////////////////////
+
                 /* Updated code */
                 ///////////////////////////////////////////////////////////////////
                 Intent intent = new Intent(context, AddNoteActivity.class);

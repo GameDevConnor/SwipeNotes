@@ -142,7 +142,74 @@ public class AddNoteActivity extends AppCompatActivity {
         if (bundle != null) {
             title.setText(bundle.getString("title"));
             body.setText(bundle.getString("body"));
+
+
+
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            StyleSpan[] styleSpans = body.getText().getSpans(0, body.getText().length() - 1, StyleSpan.class);
+
+            for (StyleSpan styleSpan : styleSpans) {
+                body.getText().removeSpan(styleSpan);
+            }
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+            Editable editable = body.getText();
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+            String[] spanArray = bundle.getString("spans").split("_");
+
+            Log.i("Span Array Length", String.valueOf(spanArray.length));
+            Log.i("Span Array First Entry", spanArray[0]);
+
+
+            if (spanArray.length > 1 && !spanArray[0].equals("")) {
+                for (int i = 0; i < spanArray.length; i++) {
+                    String[] spanComponents = spanArray[i].split(",");
+                    SpanContainer spanContainer = new SpanContainer(spanComponents[0], Integer.parseInt(spanComponents[1]), Integer.parseInt(spanComponents[2]));
+
+                    StyleSpan span;
+
+                    if (spanContainer.getSpan().equals("2")) {
+                        span = new StyleSpan(Typeface.ITALIC);
+                        editable.setSpan(span, spanContainer.getBegin(), spanContainer.getEnd(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    } else if (spanContainer.getSpan().equals("1")) {
+                        span = new StyleSpan(Typeface.BOLD);
+                        editable.setSpan(span, spanContainer.getBegin(), spanContainer.getEnd(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+                    else {
+
+
+//                        StyleSpan[] styleSpans = editable.getSpans(i, i + 1, StyleSpan.class);
+//
+//                        for (StyleSpan styleSpan : styleSpans) {
+//
+//                            if (styleSpan.getStyle() == 2) {
+//                                editable.removeSpan(styleSpan);
+//
+//                            } else if (styleSpan.getStyle() == 1) {
+//                                editable.removeSpan(styleSpan);
+//
+//                            }
+//
+//                        }
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+                    }
+
+
+                }
+            }
         }
+
+
+
 
         saveNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +264,33 @@ public class AddNoteActivity extends AppCompatActivity {
 
             note.setDescription(notebody);
             note.setTitle(titleText);
+
+
+
+
+            Editable editable = body.getText();
+            for (int i = 0; i < editable.length(); i++) {
+
+                StyleSpan[] styleSpans = editable.getSpans(i, i + 1, StyleSpan.class);
+
+                if (styleSpans.length > 0) {
+                    for (int j = 0; j < styleSpans.length; j++) {
+                        SpanContainer spanContainer = new SpanContainer(String.valueOf(styleSpans[j].getStyle()), i, i + 1);
+                        note.addSpanContainers(spanContainer);
+                    }
+                }
+                else {
+                    SpanContainer spanContainer = new SpanContainer("0", i, i + 1);
+                    note.addSpanContainers(spanContainer);
+
+                }
+
+
+            }
+
+
+
+
 
             realm.copyToRealmOrUpdate(note);
 

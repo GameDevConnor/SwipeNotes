@@ -4,12 +4,14 @@ package com.example.swipenotes;
 
 import java.text.DateFormat;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Note extends RealmObject {
 
 
+    RealmList<SpanContainer> spanContainers = new RealmList<SpanContainer>();
 
     String title;
 
@@ -54,5 +56,30 @@ public class Note extends RealmObject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public /*List<SpanContainer>*/ String getSpanContainers() {
+
+//        return this.spanContainers;
+
+        String spans = "";
+
+        for (SpanContainer spanContainer : this.spanContainers) {
+            spans += spanContainer.getSpan() + "," + spanContainer.getBegin() + "," + spanContainer.getEnd() + "_";
+        }
+
+        return spans;
+    }
+
+    public RealmList<SpanContainer> getSpanContainerList() {
+
+        return this.spanContainers;
+
+    }
+
+    public void addSpanContainers(SpanContainer spanContainer) {
+
+        this.spanContainers.add(spanContainer);
+
     }
 }
