@@ -67,7 +67,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="24dp"
         android:text="@string/gesture_button_text"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/gridLayout2"
         app:layout_constraintEnd_toEndOf="@+id/gridLayout2"
         app:layout_constraintStart_toStartOf="@+id/gridLayout2" />
