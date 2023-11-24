@@ -33,12 +33,7 @@
                 android:src="@android:drawable/ic_menu_save"
                 android:text="Back" />
 
-            <Button
-                android:id="@+id/swipeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/gesture_button_text" />
+
 
             <EditText
                 android:id="@+id/titleinput"
@@ -66,6 +61,16 @@
             android:padding="10dp"
             android:textColor="@color/white" />
     </GridLayout>
+
+    <Button
+        android:id="@+id/swipeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/gesture_button_text"
+        app:layout_constraintBottom_toBottomOf="@+id/gridLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/gridLayout2"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/menuFab"
